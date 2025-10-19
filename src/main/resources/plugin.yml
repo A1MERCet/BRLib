@@ -1,0 +1,7 @@
+name: BRLib
+version: '${version}'
+main: com.aimercet.brlib.BRLib
+commands:
+  loc:
+    description: admin command
+    permission: "cmd.brlib.loc"
