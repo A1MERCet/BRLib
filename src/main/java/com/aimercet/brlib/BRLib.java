@@ -1,7 +1,9 @@
 package com.aimercet.brlib;
 
 import com.aimercet.brlib.command.CMDLocalization;
+import com.aimercet.brlib.event.EventPlayer;
 import com.aimercet.brlib.localization.Localization;
+import com.aimercet.brlib.player.PlayerModuleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,9 +14,12 @@ public final class BRLib extends JavaPlugin {
 
     public CMDLocalization cmdLocalization = new CMDLocalization();
 
+    public PlayerModuleManager playerModuleManager;
+
     @Override
     public void onEnable()
     {
+        playerModuleManager = new PlayerModuleManager();
         Localization.instance.load();
 
         registerCMD();
@@ -32,5 +37,6 @@ public final class BRLib extends JavaPlugin {
     }
     private void registerEvent()
     {
+        Bukkit.getPluginManager().registerEvents(new EventPlayer(), this);
     }
 }

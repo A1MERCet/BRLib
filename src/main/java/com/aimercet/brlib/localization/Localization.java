@@ -113,6 +113,7 @@ public class Localization implements IYMLSerializable
     public static String get(String id){return instance.getText(id);}
     public static String get(Locale l,String id,String... replace){return instance.getText(l,id,replace);}
     public static String get(String id,String... replace){return instance.getText(id,replace);}
+    public static boolean has(String id){return instance.hasText(id);}
 
     public boolean logWarn = true;
 
@@ -122,6 +123,11 @@ public class Localization implements IYMLSerializable
     {
         instance = this;
         registry.putAll(preRegistery);
+    }
+
+    public boolean hasText(String id)
+    {
+        return registry.containsKey(id);
     }
 
     public String getText(String id){return getText(Options.Instance().local, id);}
@@ -151,7 +157,13 @@ public class Localization implements IYMLSerializable
     {
         File file = new File(Options.Instance().configPath+"/lang/registry.yml");
         YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-        yml.set("Registry",registry);
+
+        ArrayList<String> keys = new ArrayList<>(registry.keySet());
+        keys.sort(String.CASE_INSENSITIVE_ORDER);
+        keys.forEach(k->{
+            yml.set("Registry."+k,registry.get(k));
+            Logger.info(k+": "+registry.get(k));
+        });
         try {yml.save(file);}catch (IOException e){e.printStackTrace();}
     }
 

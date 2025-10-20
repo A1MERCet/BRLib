@@ -32,7 +32,8 @@ public abstract class CMDBasic implements CommandExecutor
     @Target         (value = ElementType.METHOD)
     @Documented
     public @interface CommandArgs {
-        String describe()  default "无";
+        String describe()    default "无";
+        boolean needOP()     default true;
         String[] args();
         ArgType[] types();
         boolean playerOnly() default false;
@@ -104,7 +105,8 @@ public abstract class CMDBasic implements CommandExecutor
             CommandArgs annotation = method.isAnnotationPresent(CommandArgs.class)?method.getAnnotation(CommandArgs.class):null;
             if(annotation==null)return null;
 
-            if(annotation.playerOnly() && !(sender instanceof Player)){sender.sendMessage("只有玩家才可以执行该指令");return null;}
+            if(annotation.playerOnly() && !(sender instanceof Player))  {sender.sendMessage("只有玩家才可以执行该指令");return null;}
+            if(annotation.needOP() && !sender.isOp())                   {sender.sendMessage("只有管理员才可以执行该指令");return null;}
 
             ArgType[] anTypes = annotation.types();
             int argLength = 0;

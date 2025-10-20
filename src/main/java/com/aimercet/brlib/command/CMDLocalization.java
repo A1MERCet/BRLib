@@ -3,6 +3,9 @@ package com.aimercet.brlib.command;
 import com.aimercet.brlib.localization.Localization;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public class CMDLocalization extends CMDBasic
@@ -36,8 +39,11 @@ public class CMDLocalization extends CMDBasic
                 sender.sendMessage(String.format("  空"));
             }else{
                 StringBuilder builder = new StringBuilder().append("\n");
-                lang.texts.forEach((k,v)->{
-                    builder.append(String.format("  %s: %s\n",k,v));
+
+                List<String> keys = new ArrayList<>(lang.texts.keySet());
+                keys.sort(String.CASE_INSENSITIVE_ORDER);
+                keys.forEach((k)->{
+                    builder.append(String.format("  %s: %s\n",k,lang.texts.get(k)));
                 });
                 sender.sendMessage(builder.toString());
             }
@@ -60,10 +66,22 @@ public class CMDLocalization extends CMDBasic
             sender.sendMessage(String.format("  空"));
         }else{
             StringBuilder builder = new StringBuilder().append("\n");
-            lang.texts.forEach((k,v)->{
-                builder.append(String.format("  %s: %s\n",k,v));
+            List<String> keys = new ArrayList<>(lang.texts.keySet());
+            keys.sort(String.CASE_INSENSITIVE_ORDER);
+            keys.forEach((k)->{
+                builder.append(String.format("  %s: %s\n",k,lang.texts.get(k)));
             });
             sender.sendMessage(builder.toString());
         }
+    }
+
+    @CommandArgs(
+            describe = "保存本地化条目注册表至文件",
+            args = {"save","registry"},
+            types = {ArgType.DEPEND,ArgType.DEPEND}
+    )
+    public void saveRegistryFile(CommandSender sender)
+    {
+        Localization.instance.generaRegistryFile();
     }
 }
