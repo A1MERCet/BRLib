@@ -24,6 +24,7 @@ public class Logger implements IYMLSerializable
     
     public enum Level
     {
+        DEBUG(Localization.register("log_level_debug","Debug")),
         INFO(Localization.register("log_level_info","Info")),
         WARN(Localization.register("log_level_warn","Warn")),
         ERROR(Localization.register("log_level_error","Error")),
@@ -114,12 +115,23 @@ public class Logger implements IYMLSerializable
         String print = log.buildString();
 
         switch (log.level){
+            case DEBUG: Bukkit.getLogger().   info(print); break;
             case INFO:  Bukkit.getLogger().   info(print); break;
             case WARN:  Bukkit.getLogger().warning(print); break;
             case ERROR: Bukkit.getLogger(). severe(print); break;
         }
     }
 
+    public static Log debug(LogBuilder builder){return debug(builder.toString());}
+    public static Log debug(String msg)
+    {
+        Log l = new Log()
+                .setLevel(Level.DEBUG)
+                .setMessage(msg)
+                .setType(Type.SERVER);
+        log(l);
+        return l;
+    }
     public static Log info(LogBuilder builder){return info(builder.toString());}
     public static Log info(String msg)
     {

@@ -5,3 +5,6 @@ commands:
   loc:
     description: admin command
     permission: "cmd.brlib.loc"
+  brp:
+    description: admin command
+    permission: "cmd.brlib.player"

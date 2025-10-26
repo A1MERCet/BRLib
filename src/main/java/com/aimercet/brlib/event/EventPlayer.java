@@ -13,7 +13,7 @@ public class EventPlayer implements Listener
     public void onPlayerJoin(PlayerJoinEvent evt)
     {
         Player player = evt.getPlayer();
-        PlayerManager.instance.load(player.getName());
+        PlayerManager.instance.load(player.getName(),true);
     }
 
     @EventHandler

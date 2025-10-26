@@ -3,6 +3,7 @@ package com.aimercet.brlib.player;
 import com.aimercet.brlib.Options;
 import com.aimercet.brlib.config.IYMLSerializable;
 import com.aimercet.brlib.localization.Localization;
+import com.aimercet.brlib.log.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -13,8 +14,8 @@ import java.util.Locale;
 
 public class PlayerState implements IYMLSerializable
 {
-    public static String filePath()                 {return Options.Instance().getFilePath()+"/player/";};
-    public static String filePath(String player)    {return Options.Instance().getFilePath()+"/player/"+player+"/";};
+    public static String filePath()                 {return Options.Instance().configPath+"/player/";};
+    public static String filePath(String player)    {return Options.Instance().configPath+"/player/"+player+"/";};
 
     public final String name;
     public final PlayerModuleController moduleController;
@@ -25,7 +26,7 @@ public class PlayerState implements IYMLSerializable
     public PlayerState(String name)
     {
         this.name = name;
-        this.moduleController = new PlayerModuleController(this);
+        this.moduleController = new PlayerModuleController(this).init();
     }
 
     public void onPreInit()

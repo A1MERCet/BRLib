@@ -2,6 +2,7 @@ package com.aimercet.brlib.player;
 
 import com.aimercet.brlib.log.Logger;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +27,12 @@ public class PlayerModuleController
 
         PlayerModuleManager.instance.getPreRegisterModules().forEach(e->{try {
 
-            IPlayerModule module = e.getConstructor(PlayerState.class).newInstance(playerState);
+            Constructor<? extends IPlayerModule> constructor = e.getDeclaredConstructor(PlayerState.class);
+            constructor.setAccessible(true);
+            IPlayerModule module = constructor.newInstance(playerState);
             register(module);
 
-        }catch (Exception ex){ex.printStackTrace();}});
+        }catch (Exception ex){Logger.error("为玩家["+playerState.name+"]创建模块["+e.getSimpleName()+"]失败");ex.printStackTrace();}});
 
         return this;
     }
