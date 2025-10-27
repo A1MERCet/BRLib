@@ -9,7 +9,8 @@ import java.util.Locale;
 public class Options implements IYMLSerializable
 {
     public Locale local = Locale.getDefault();
-    public String configPath = "D:/ProjectBR/Server/config/";
+//    public String configPath = "D:/ProjectBR/Server/config/";
+    public String configPath = "C:/workspace/ProjectBR/Server/config/";
 
     private static Options instance;
     public static Options Instance(){return instance;};

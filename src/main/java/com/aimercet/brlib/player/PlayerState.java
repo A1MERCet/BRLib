@@ -60,8 +60,8 @@ public class PlayerState implements IYMLSerializable
 
     public void onUnload()
     {
-        unloaded = true;
         moduleController.unRegisterAll();
+        unloaded = true;
     }
 
     public String getName() {return name;}
