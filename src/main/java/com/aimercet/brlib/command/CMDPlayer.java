@@ -21,7 +21,7 @@ public class CMDPlayer extends CMDBasic
     public void list(CommandSender sender)
     {
         StringBuilder b = new StringBuilder();;
-        b.append("所有玩家["+PlayerManager.instance.getPlayers().size()+"]");
+        b.append("所有玩家["+PlayerManager.instance.getPlayers().size()+"]\n");
         for (PlayerState value : PlayerManager.instance.getPlayers().values()) {
             Player player = value.getPlayer();
             b.append(" - ").append(value.name).append("[").append(player==null?"null":(player.isOnline()?"Online":"Offline")).append("]");
@@ -40,7 +40,7 @@ public class CMDPlayer extends CMDBasic
         if(ps==null){sender.sendMessage("玩家["+player+"]不存在");return;}
 
         StringBuilder b = new StringBuilder().append(player).append(": ");
-        b.append("已注册的模块["+ps.getModuleController().getMoudles().size()+"]");
+        b.append("已注册的模块["+ps.getModuleController().getMoudles().size()+"]\n");
         for (IPlayerModule module : ps.getModuleController().getMoudles())
         {
             b.append("  - ").append(module.getID()).append("\n");

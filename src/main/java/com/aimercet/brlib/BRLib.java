@@ -54,7 +54,7 @@ public final class BRLib extends JavaPlugin {
         registerEvent();
         LogBuilder.Lang(Localization.serverEnable).info();
 
-        new PluginEnableRunnable().runTaskTimerAsynchronously(this,0L,1L);
+        new PluginEnableRunnable().runTaskTimer(this,0L,1L);
     }
 
     @Override

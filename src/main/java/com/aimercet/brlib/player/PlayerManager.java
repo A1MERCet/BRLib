@@ -31,9 +31,10 @@ public class PlayerManager
             ps.load();
             ps.onInit();
             players.put(name,ps);
+
+            if(register) players.put(name,ps);
+            Logger.info("Player "+name+" loaded register="+register);
         }
-        if(register) players.put(name,ps);
-        Logger.info("Player "+name+" loaded register="+register);
         return ps;
     }
 
