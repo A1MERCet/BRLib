@@ -40,8 +40,8 @@ public class CMDPlayer extends CMDBasic
         if(ps==null){sender.sendMessage("玩家["+player+"]不存在");return;}
 
         StringBuilder b = new StringBuilder().append(player).append(": ");
-        b.append("已注册的模块["+ps.getModuleController().getMoudles().size()+"]\n");
-        for (IPlayerModule module : ps.getModuleController().getMoudles())
+        b.append("已注册的模块["+ps.getModuleController().getModules().size()+"]\n");
+        for (IPlayerModule module : ps.getModuleController().getModules())
         {
             b.append("  - ").append(module.getID()).append("\n");
         }

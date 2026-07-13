@@ -3,7 +3,6 @@ package com.aimercet.brlib.player;
 import com.aimercet.brlib.Options;
 import com.aimercet.brlib.config.IYMLSerializable;
 import com.aimercet.brlib.localization.Localization;
-import com.aimercet.brlib.log.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -70,6 +69,7 @@ public class PlayerState implements IYMLSerializable
 
     public PlayerModuleController getModuleController() {return moduleController;}
     public IPlayerModule getModule(String id)           {return moduleController.get(id);}
-    public List<IPlayerModule> getModules()             {return moduleController.getMoudles();}
+    public <T extends IPlayerModule> T getModule(Class<T> clz) {return moduleController.get(clz);}
+    public List<IPlayerModule> getModules()             {return moduleController.getModules();}
 
 }

@@ -9,8 +9,8 @@ import java.util.List;
 
 public class PlayerModuleController
 {
-    private final List<IPlayerModule> moudles = new ArrayList<>();
-    private final HashMap<String, IPlayerModule> moudleMap = new HashMap<>();
+    private final List<IPlayerModule> modules = new ArrayList<>();
+    private final HashMap<String, IPlayerModule> moduleMap = new HashMap<>();
 
     public final PlayerState playerState;
     public PlayerModuleController(PlayerState playerState)
@@ -39,7 +39,7 @@ public class PlayerModuleController
 
     public PlayerModuleController loadAll()
     {
-        moudles.forEach(e->{
+        modules.forEach(e->{
             try {e.load();}catch (Exception ex){ex.printStackTrace();}
         });
         return this;
@@ -47,14 +47,20 @@ public class PlayerModuleController
 
     public PlayerModuleController saveAll()
     {
-        moudles.forEach(e->{
+        modules.forEach(e->{
             try {e.save();}catch (Exception ex){ex.printStackTrace();}
         });
         return this;
     }
 
-    public List<IPlayerModule> getMoudles()                                     {return moudles;}
-    public IPlayerModule get(String moudleName)                                 {return moudleMap.get(moudleName);}
+    public List<IPlayerModule> getModules()                                     {return modules;}
+    public IPlayerModule get(String moduleName)                                 {return moduleMap.get(moduleName);}
+    public <T extends IPlayerModule> T get(Class<T> clz) {
+        for (IPlayerModule v : moduleMap.values())
+            if (clz.isInstance(v))
+                return clz.cast(v);
+        return null;
+    }
 
     public PlayerModuleController register(IPlayerModule module){return register(module,true);}
     public PlayerModuleController register(IPlayerModule module, boolean load)
@@ -62,10 +68,10 @@ public class PlayerModuleController
         if(playerState.isUnloaded())                {Logger.warn("module register warn - PlayerState is unloaded");}
         if(module==null)                            { throw new NullPointerException("failed to register module - Module is null");}
         if(module.getPlayerState()==null)           { throw new NullPointerException("failed to register module["+module.getID()+"] - PlayerState is null");}
-        if(moudleMap.containsKey(module.getID()))   {throw new IllegalArgumentException("module["+module.getID()+"] is already registered");}
+        if(moduleMap.containsKey(module.getID()))   {throw new IllegalArgumentException("module["+module.getID()+"] is already registered");}
 
-        moudles.add(module);
-        moudleMap.put(module.getID(),module);
+        modules.add(module);
+        moduleMap.put(module.getID(),module);
         if(load) try {module.load();}catch (Exception e){e.printStackTrace();}
         try {module.onRegister();}catch (Exception e){e.printStackTrace();}
         return this;
@@ -75,10 +81,10 @@ public class PlayerModuleController
     public IPlayerModule unregister(IPlayerModule module,boolean save)
     {
         if(playerState.isUnloaded()){Logger.warn("module unregister warn - PlayerState is unloaded");}
-        if(moudleMap.get(module.getID())==null)return null;
+        if(moduleMap.get(module.getID())==null)return null;
         module.save();
-        moudleMap.remove(module.getID());
-        moudles.remove(module);
+        moduleMap.remove(module.getID());
+        modules.remove(module);
         if(save) try {module.save();}catch (Exception e){e.printStackTrace();}
         try {module.onUnRegister();}catch (Exception e){e.printStackTrace();}
         return module;
@@ -86,7 +92,7 @@ public class PlayerModuleController
     public void unRegisterAll(){unRegisterAll(true);}
     public void unRegisterAll(boolean save)
     {
-        new ArrayList<>(moudles).forEach(e->{
+        new ArrayList<>(modules).forEach(e->{
             unregister(e,save);
         });
     }
