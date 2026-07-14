@@ -1,7 +1,6 @@
 package com.aimercet.brlib.player;
 
 import com.aimercet.brlib.log.Logger;
-
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,21 +8,24 @@ import java.util.List;
 
 public class PlayerModuleController
 {
+
+    public final PlayerState playerState;
+
     private final List<IPlayerModule> modules = new ArrayList<>();
     private final HashMap<String, IPlayerModule> moduleMap = new HashMap<>();
 
-    public final PlayerState playerState;
+
     public PlayerModuleController(PlayerState playerState)
     {
         this.playerState = playerState;
     }
 
-    private boolean init = false;
+    private boolean _init = false;
     public PlayerModuleController init()
     {
+        if(_init)return this;
+        _init =true;
         if(playerState == null){throw new NullPointerException("PlayerModuleController init failed - PlayerState is null");}
-        if(init)return this;
-        init=true;
 
         PlayerModuleManager.instance.getPreRegisterModules().forEach(e->{try {
 

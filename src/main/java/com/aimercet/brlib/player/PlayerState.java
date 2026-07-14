@@ -4,12 +4,14 @@ import com.aimercet.brlib.Options;
 import com.aimercet.brlib.config.IYMLSerializable;
 import com.aimercet.brlib.localization.Localization;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class PlayerState implements IYMLSerializable
 {
@@ -17,19 +19,35 @@ public class PlayerState implements IYMLSerializable
     public static String filePath(String player)    {return Options.Instance().configPath+"/player/"+player+"/";};
 
     public final String name;
+    public final String uuid;
     public final PlayerModuleController moduleController;
     public Locale locale = Locale.getDefault();
 
     private boolean unloaded = false;
 
-    public PlayerState(String name)
+    public PlayerState(String uuid)
     {
+        this.uuid = uuid;
+        this.moduleController = new PlayerModuleController(this);
+
+        String name = null;
+        try {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) { name = player.getName(); }
+            else {
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                if  (offlinePlayer != null) { name = offlinePlayer.getName(); }
+            }
+        }catch (Exception e){
+            Bukkit.getLogger().severe(String.format("[玩家状态] 获取玩家名失败 %s", uuid));
+            e.printStackTrace();
+        }
         this.name = name;
-        this.moduleController = new PlayerModuleController(this).init();
     }
 
     public void onPreInit()
     {
+        this.moduleController.init();
     }
     public void onInit()
     {

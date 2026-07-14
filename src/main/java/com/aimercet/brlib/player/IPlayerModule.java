@@ -18,6 +18,8 @@ public interface IPlayerModule extends IYMLSerializable
     PlayerState getPlayerState();
 
 
+    void onTick();
+    void onTickAsync();
     void onRegister();
     void onUnRegister();
 

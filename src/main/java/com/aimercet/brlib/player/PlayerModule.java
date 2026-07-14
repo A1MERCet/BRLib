@@ -33,6 +33,16 @@ public abstract class PlayerModule implements IPlayerModule
     }
 
     @Override
+    public void onTick() {
+
+    }
+
+    @Override
+    public void onTickAsync() {
+
+    }
+
+    @Override
     public void onRegister() {
 
     }

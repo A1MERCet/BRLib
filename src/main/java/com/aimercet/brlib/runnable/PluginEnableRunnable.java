@@ -23,7 +23,7 @@ public class PluginEnableRunnable extends BukkitRunnable
             try {
                 if(!Bukkit.getOnlinePlayers().isEmpty()) Logger.info("重载在线玩家");
                 for (Player player : Bukkit.getOnlinePlayers())
-                    PlayerManager.instance.load(player.getName(),true);
+                    PlayerManager.instance.load(player.getUniqueId().toString(),true);
             }catch (Exception e){e.printStackTrace();}
             this.cancel();
         }

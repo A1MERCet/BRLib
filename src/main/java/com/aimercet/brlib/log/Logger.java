@@ -69,6 +69,7 @@ public class Logger implements IYMLSerializable
         public Log setType(Type type) {this.type = type;return this;}
         public Log setMessage(String message) {this.message = message;return this;}
     }
+
     public static class LogPlayer extends Log
     {
         public String player;

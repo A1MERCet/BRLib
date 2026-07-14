@@ -7,6 +7,7 @@ import com.aimercet.brlib.event.EventServer;
 import com.aimercet.brlib.localization.Localization;
 import com.aimercet.brlib.log.LogBuilder;
 import com.aimercet.brlib.log.Logger;
+import com.aimercet.brlib.player.ModuleBRLib;
 import com.aimercet.brlib.player.PlayerManager;
 import com.aimercet.brlib.player.PlayerModuleManager;
 import com.aimercet.brlib.runnable.PluginEnableRunnable;
@@ -16,6 +17,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BRLib extends JavaPlugin {
+    private static BRLib instance;
+    public static BRLib instance(){return instance;}
 
     public Options options;
     public Localization localization;
@@ -31,9 +34,10 @@ public final class BRLib extends JavaPlugin {
     public void onLoad()
     {
         super.onLoad();
-        playerModuleManager = new PlayerModuleManager();
         options = new Options();
         options.load();
+
+        playerModuleManager = new PlayerModuleManager();
 
         playerManager = new PlayerManager();
 
@@ -48,11 +52,16 @@ public final class BRLib extends JavaPlugin {
     public void onEnable()
     {
         super.onEnable();
+        instance = this;
+
         saveDefaultConfig();
 
         registerCMD();
         registerEvent();
         LogBuilder.Lang(Localization.serverEnable).info();
+
+        playerModuleManager.init();
+        PlayerModuleManager.instance.registerPreModule(ModuleBRLib.class);
 
         new PluginEnableRunnable().runTaskTimer(this,0L,1L);
     }
