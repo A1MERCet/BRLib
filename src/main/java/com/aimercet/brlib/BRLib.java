@@ -11,9 +11,9 @@ import com.aimercet.brlib.player.ModuleBRLib;
 import com.aimercet.brlib.player.PlayerManager;
 import com.aimercet.brlib.player.PlayerModuleManager;
 import com.aimercet.brlib.runnable.PluginEnableRunnable;
+import com.aimercet.brlib.util.UtilString;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BRLib extends JavaPlugin {
