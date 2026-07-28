@@ -30,7 +30,7 @@ public interface IPlayerModule extends IYMLSerializable
     boolean isPersistence();
 
     @Override
-    default String getFilePath()
+    default String getDefaultFilePath()
     {
         if(getPlayerState()==null)
             throw new NullPointerException("save module ["+getID()+"] failed - PlayerState is null");

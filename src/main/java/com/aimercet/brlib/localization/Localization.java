@@ -63,7 +63,7 @@ public class Localization implements IYMLSerializable
             return registry.get(id);
         }
 
-        @Override public String getFilePath() {return "";}
+        @Override public String getDefaultFilePath() {return "";}
 
         @Override
         public void save(File file, YamlConfiguration yml) {
@@ -167,7 +167,7 @@ public class Localization implements IYMLSerializable
         try {yml.save(file);}catch (IOException e){e.printStackTrace();}
     }
 
-    @Override public String getFilePath() {return Options.Instance().configPath+"/lang/lang.yml";}
+    @Override public String getDefaultFilePath() {return Options.Instance().configPath+"/lang/lang.yml";}
 
     @Override
     public void save(File file, YamlConfiguration yml)

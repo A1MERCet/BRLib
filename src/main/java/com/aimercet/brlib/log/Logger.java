@@ -45,16 +45,19 @@ public class Logger implements IYMLSerializable
         public Log() {}
 
         public void clearCache(){cache=null;}
-        public String buildString()
+        public String buildString(){return buildString(true);}
+        public String buildString(boolean time)
         {
             if(cache==null)
             {
                 StringBuilder builder = new StringBuilder();
+                if (time)
+                    builder
+                            .append("[")
+                            .append(sdf.format(date))
+                            .append("] ")
+                            .append("[").append(Localization.get(level.lang)).append("]");
                 builder
-                        .append("[")
-                        .append(sdf.format(date))
-                        .append(" ")
-                        .append(Localization.get(level.lang)).append("]")
                         .append("[").append(Localization.get(type.lang)).append("]")
                         .append(message)
                 ;
@@ -113,7 +116,7 @@ public class Logger implements IYMLSerializable
     {
         content.add(log);
 
-        String print = log.buildString();
+        String print = log.buildString(false);
 
         switch (log.level){
             case DEBUG: Bukkit.getLogger().   info(print); break;
@@ -197,7 +200,7 @@ public class Logger implements IYMLSerializable
         return l;
     }
 
-    @Override public String getFilePath() {return Options.Instance().configPath+"/log/"+new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(System.currentTimeMillis())+".yml";}
+    @Override public String getDefaultFilePath() {return Options.Instance().configPath+"/log/"+new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(System.currentTimeMillis())+".yml";}
 
     @Override
     public void save(File file, YamlConfiguration yml)

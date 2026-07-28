@@ -2,7 +2,6 @@ package com.aimercet.brlib.config;
 
 import com.aimercet.brlib.log.Logger;
 import com.aimercet.brlib.util.UtilString;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -10,9 +9,9 @@ import java.io.IOException;
 
 public interface IYMLSerializable
 {
-    String getFilePath();
+    default String getDefaultFilePath() {return null;}
 
-    default void save(){save(getFilePath());}
+    default void save(){save(getDefaultFilePath());}
     default void save(String path){
         if(UtilString.isEmpty(path)){Logger.error("An error occurred while saving yml. The path is empty");return;}
         File file = new File(path);
@@ -23,7 +22,7 @@ public interface IYMLSerializable
 
     void save(File file, YamlConfiguration yml);
 
-    default void load() {load(getFilePath());}
+    default void load() {load(getDefaultFilePath());}
     default void load(String path)
     {
         if(!fileExists(path))return;
@@ -36,7 +35,7 @@ public interface IYMLSerializable
 
     default boolean fileExists()
     {
-        return new File(getFilePath()).exists();
+        return new File(getDefaultFilePath()).exists();
     }
     default boolean fileExists(String path)
     {

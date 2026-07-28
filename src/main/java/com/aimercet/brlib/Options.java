@@ -20,7 +20,7 @@ public class Options implements IYMLSerializable
         instance = this;
     }
 
-    @Override public String getFilePath() {return configPath+"/options.yml";}
+    @Override public String getDefaultFilePath() {return configPath+"/options.yml";}
 
     @Override
     public void save(File f, YamlConfiguration y)

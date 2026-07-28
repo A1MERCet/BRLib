@@ -56,7 +56,7 @@ public class PlayerState implements IYMLSerializable
     public String getLang(String id)                    {return Localization.instance.getText(locale,id);}
     public String getLang(String id,String... replace)  {return Localization.instance.getText(locale,id,replace);}
 
-    @Override public String getFilePath() {return filePath(name)+name+".yml";}
+    @Override public String getDefaultFilePath() {return filePath(name)+name+".yml";}
 
     @Override
     public void save(File file, YamlConfiguration yml)
