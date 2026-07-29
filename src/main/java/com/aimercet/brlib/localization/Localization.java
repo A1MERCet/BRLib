@@ -19,8 +19,8 @@ public class Localization implements IYMLSerializable
     public static String register(String id){register(id,id);return id;}
     public static String register(String id,String text)
     {
-        if(Localization.instance==null) preRegistery.put(id,text);
-        else                            Localization.instance.registry.put(id,text);
+        if(Localization.instance==null) preRegistery.put(id.toLowerCase(),text);
+        else                            Localization.instance.registry.put(id.toLowerCase(),text);
         return id;
     }
     public HashMap<String,String> registry = new MapBuilder<String,String>()
@@ -32,9 +32,9 @@ public class Localization implements IYMLSerializable
             .put(serverLangMissing,"Lang($l) missing text")
             .map;
 
-    public static String serverEnable = "server_enable";
-    public static String serverDisable = "server_disable";
-    public static String serverLangMissing = "server_lang_missing";
+    public static String serverEnable = "server.enable";
+    public static String serverDisable = "server.disable";
+    public static String serverLangMissing = "server.lang_missing";
 
 
 
@@ -89,7 +89,7 @@ public class Localization implements IYMLSerializable
             for (String k : keys) {
                 String v = yml.getString("table." + k);
                 if(v==null){continue;}
-                texts.put(k, v);
+                texts.put(k, v.toLowerCase());
             }
         }
 
@@ -157,6 +157,7 @@ public class Localization implements IYMLSerializable
     {
         File file = new File(Options.Instance().configPath+"/lang/registry.yml");
         YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+        yml.set("Registry", null);
 
         ArrayList<String> keys = new ArrayList<>(registry.keySet());
         keys.sort(String.CASE_INSENSITIVE_ORDER);

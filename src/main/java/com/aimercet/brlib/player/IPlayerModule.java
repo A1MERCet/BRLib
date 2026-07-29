@@ -29,7 +29,6 @@ public interface IPlayerModule extends IYMLSerializable
      */
     boolean isPersistence();
 
-    @Override
     default String getDefaultFilePath()
     {
         if(getPlayerState()==null)
@@ -40,8 +39,8 @@ public interface IPlayerModule extends IYMLSerializable
         return PlayerState.filePath(getPlayerState().name)+getID()+".yml";
     }
 
-    @Override default void save() {if(isPersistence())IYMLSerializable.super.save();}
-    @Override default void load() {if(isPersistence())IYMLSerializable.super.load();}
-    @Override default void save(String path) {if(isPersistence())IYMLSerializable.super.save(path);}
-    @Override default void load(String path) {if(isPersistence())IYMLSerializable.super.load(path);}
+    default void save() {if(isPersistence())IYMLSerializable.super.save();}
+    default void load() {if(isPersistence())IYMLSerializable.super.load();}
+    default void save(String path) {if(isPersistence())IYMLSerializable.super.save(path);}
+    default void load(String path) {if(isPersistence())IYMLSerializable.super.load(path);}
 }

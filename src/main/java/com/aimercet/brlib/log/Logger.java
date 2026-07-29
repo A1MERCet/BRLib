@@ -15,8 +15,8 @@ public class Logger implements IYMLSerializable
 {
     public enum Type
     {
-        PLAYER(Localization.register("log_type_player","Player")),
-        SERVER(Localization.register("log_type_server","Server")),
+        PLAYER(Localization.register("log.type.player","Player")),
+        SERVER(Localization.register("log.type.server","Server")),
         ;
         private String lang;
         Type(String lang) {this.lang = lang;}
@@ -24,10 +24,10 @@ public class Logger implements IYMLSerializable
     
     public enum Level
     {
-        DEBUG(Localization.register("log_level_debug","Debug")),
-        INFO(Localization.register("log_level_info","Info")),
-        WARN(Localization.register("log_level_warn","Warn")),
-        ERROR(Localization.register("log_level_error","Error")),
+        DEBUG(Localization.register("log.level.debug","Debug")),
+        INFO(Localization.register("log.level.info","Info")),
+        WARN(Localization.register("log.level.warn","Warn")),
+        ERROR(Localization.register("log.level.error","Error")),
         ;
         private String lang;
         Level(String lang) {this.lang = lang;}

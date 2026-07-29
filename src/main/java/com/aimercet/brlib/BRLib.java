@@ -34,8 +34,11 @@ public final class BRLib extends JavaPlugin {
     public void onLoad()
     {
         super.onLoad();
+        saveDefaultConfig();
+
         options = new Options();
         options.load();
+        options.configPath = getConfig().getString("configPath");
 
         playerModuleManager = new PlayerModuleManager();
 
